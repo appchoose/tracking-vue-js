@@ -1,7 +1,7 @@
 <template>
     <div class="orders-container">
         <table>
-            <h3>{{ title }} ({{getOrderSize()}})</h3>
+            <h3>{{ title }} ({{ getOrderSize() }})</h3>
             <app-order v-for="(order, index) in orders"
             v-bind:key="index"
             v-bind:id="order.id"
@@ -20,7 +20,7 @@ import Order from './Order';
 
 export default {
   components: { 'app-order': Order },
-  props: ['title', 'new'],
+  props: ['title', 'processed'],
   data() {
     return {
       orders: [],
@@ -44,11 +44,9 @@ export default {
     };
     // eslint-disable-next-line
     this.$http(options).then(function (data) {
-      // eslint-disable-next-line
-      console.log(data);
-      if (this.new) {
+      if (this.processed === 'false') {
         this.orders = data.body.orders.filter(order => order.tracking_number === null);
-      } else {
+      } else if (this.processed === 'true') {
         this.orders = data.body.orders.filter(order => order.tracking_number != null);
       }
     });

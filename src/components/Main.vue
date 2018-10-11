@@ -1,8 +1,8 @@
 <template>
   <div>
     <app-header></app-header>
-    <app-orders v-bind:title="new_orders_title" status="0"></app-orders>
-    <app-orders v-bind:title="processed_orders_title" status="1"></app-orders>
+    <app-orders v-bind:title="new_orders_title" processed='false'></app-orders>
+    <app-orders v-bind:title="processed_orders_title" processed='true'></app-orders>
   </div>
 </template>
 

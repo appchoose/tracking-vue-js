@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  props: ['id', 'date', 'amount', 'name', 'tracking', 'adresse'],
+  props: ['id', 'date', 'amount', 'name', 'tracking_number', 'adresse'],
   methods: {
     openModal() {
       // alert("poisson d'avril");
