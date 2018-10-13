@@ -31,9 +31,9 @@ npm install --save bootstrap
 ### Font Awesome
 
 ```
-npm i --save @fortawesome/fontawesome-svg-core
-npm i --save @fortawesome/free-solid-svg-icons
-npm i --save @fortawesome/vue-fontawesome
+npm install --save @fortawesome/fontawesome-svg-core
+npm install --save @fortawesome/free-solid-svg-icons
+npm install --save @fortawesome/vue-fontawesome
 ```
 
 ### ESLint settings in Visual Studio Code
