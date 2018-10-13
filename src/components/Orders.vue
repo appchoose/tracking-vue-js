@@ -41,7 +41,7 @@ export default {
 
     // GET request to retrieve orders
     const options = {
-      url: 'https://dev-api-vp.appchoose.io/admin/read/orders',
+      url: `${process.env.ADMIN_URL_DEV}/read/orders`,
       method: 'GET',
       headers: { 'x-api-key': process.env.X_API_KEY },
       params: { brand_id: this.brand_id, sale_id: this.sale_id },

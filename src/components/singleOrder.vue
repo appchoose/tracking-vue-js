@@ -80,7 +80,7 @@ export default {
     },
     post() {
       if (this.getDeliveryCompany() !== null) {
-        this.$http.post('https://r0f3fxooni.execute-api.eu-west-1.amazonaws.com/dev/update/order',
+        this.$http.post(`${process.env.ADMIN_URL_DEV}/update/order`,
           { order_id: this.id,
             tracking_number: this.text_input,
             delivery_service: this.getDeliveryCompany(),
