@@ -1,5 +1,5 @@
 <template>
-    <div class="header">
+    <div class="container-flex app-header">
         <h2>{{ title }}</h2>
     </div>
 </template>
@@ -15,13 +15,14 @@ export default {
 </script>
 
 <style>
-.header {
-  background: #008287;
-  height: 100px;
-  padding-top: 30px;
+.app-header {
+  background: #2193b0;
+  padding-top: 35px;
+  padding-bottom: 30px;
   padding-left: 15px;
   margin-bottom: 25px;
   color: white;
+  overflow: auto;
 }
 h2 {
   font-size: 30px;

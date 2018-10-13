@@ -5,9 +5,16 @@ import BootstrapVue from 'bootstrap-vue';
 import VueResource from 'vue-resource';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faExclamation, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import App from './App';
 import router from './router';
 
+library.add(faExclamation);
+library.add(faUpload);
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(BootstrapVue);
 Vue.use(VueResource);
 

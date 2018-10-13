@@ -1,8 +1,10 @@
 <template>
-  <div>
+  <div class="container-flex">
     <app-header></app-header>
-    <app-orders v-bind:title="new_orders_title" processed='false'></app-orders>
-    <app-orders v-bind:title="processed_orders_title" processed='true'></app-orders>
+    <app-orders status='new' v-bind:brand_id="brand_id" v-bind:sale_id="sale_id">
+    </app-orders>
+    <app-orders status='processed' v-bind:brand_id="brand_id" v-bind:sale_id="sale_id">
+    </app-orders>
   </div>
 </template>
 
@@ -18,8 +20,8 @@ export default {
   },
   data() {
     return {
-      new_orders_title: 'Nouvelles commandes',
-      processed_orders_title: 'Commandes traitées',
+      brand_id: this.$route.params.id,
+      sale_id: this.$route.query.sale_id,
     };
   },
 };
