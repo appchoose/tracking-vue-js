@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-form-group >
-      <b-form-radio-group id="radios1" v-model="selected" :options="options" stacked>
+      <b-form-radio-group v-model="selected" :options="options" stacked>
       </b-form-radio-group>
     </b-form-group>
   </div>

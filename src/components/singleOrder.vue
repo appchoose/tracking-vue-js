@@ -2,38 +2,34 @@
     <div class="container-flex order">
       <div class="row">
         <div class="col-sm-12 col-md-8 ls-order-info">
-          <p><a>client :</a> {{ name }}</p>
-          <p><a>adresse de livraison : </a> {{ adresse }}</p>
-          <b-row class="img-row">
-            <b-col-1 v-for="(img, key) in images" :key="key">
-              <b-img thumbnail v-bind:src="img" fluid height=75 @click="modalShow = !modalShow"/>
-              <b-modal centered hide-header hide-footer v-model="modalShow">
-                <image-modal v-bind:src="images"></image-modal>
-              </b-modal>
-            </b-col-1>
-          </b-row>
-          <div v-if="tracking_number === null">
-            <input type="text"
-            class="form-control col-sm-8"
-            placeholder="numéro de suivi"
-            v-model="text_input"/>
-            <b-button v-on:click.prevent="checkTrackingNumber" class="btn-submit col-sm-1">
-              <font-awesome-icon icon="upload"/>
-            </b-button>
-            <b-button v-b-modal.modal1 class="btn-alert col-sm-1">
-              <font-awesome-icon icon="exclamation"/>
-            </b-button>
-            <b-modal id="modal1" centered ok-only title="Un problème ?" ok-title="Envoyer">
-              <problem-modal></problem-modal>
-            </b-modal>
+          <p><a>client :</a> {{ order.user.name }}</p>
+          <p><a>adresse de livraison : </a> {{ order.user.address }}</p>
+
+          <order-images v-bind:images="images"></order-images>
+
+          <div class="input-group" v-if="order.tracking_number === null">
+            <input type="text" class="form-control" placeholder="numéro de suivi"
+            v-model="text_input" aria-label="Recipient's username" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button"
+                @click.prevent="checkTrackingNumber">
+                  Envoyer <font-awesome-icon icon="upload"/>
+                </button>
+                <button class="btn btn-outline-secondary" type="button" v-b-modal.modal1>
+                  Signaler <font-awesome-icon icon="exclamation"/>
+                </button>
+                <b-modal id="modal1" centered ok-only title="Un problème ?" ok-title="Envoyer">
+                  <problem-modal></problem-modal>
+                </b-modal>
+              </div>
           </div>
           <div v-else>
-            <p><a>numéro de suivi :</a> {{ tracking_number }}</p>
+            <p><a>numéro de suivi :</a> {{ order.tracking_number }}</p>
           </div>
         </div>
         <div class="col-sm-12 col-md-4 rs-order-info">
-          <p><a>contact : </a> {{ phone }}</p>
-          <p><a>numéro de commande :</a> {{ id }}</p>
+          <p><a>contact : </a> {{ order.user.phone_number }}</p>
+          <p><a>numéro de commande :</a> {{ order.id }}</p>
           <p><a>commande enregistrée le :</a> {{ getDate }} à {{ getTime }}</p>
           <p><a>montant de la commande :</a> {{ formatAmount }}€</p>
         </div>
@@ -43,28 +39,19 @@
 
 <script>
 import ProblemModal from './ProblemModal';
-import ImageModal from './ImageModal';
-import Images from './Images';
+import OrderImages from './OrderImages';
 
 export default {
   props: {
-    id: String,
-    date: String,
-    amount: Number,
-    name: String,
-    phone: String,
-    tracking_number: String,
-    adresse: String,
+    order: Object,
     images: Array,
   },
   components: {
     'problem-modal': ProblemModal,
-    'order-images': Images,
-    'image-modal': ImageModal,
+    'order-images': OrderImages,
   },
   data() {
     return {
-      modalShow: false,
       text_input: '',
     };
   },
@@ -81,47 +68,37 @@ export default {
     checkTrackingNumber() {
       this.$http.get(`https://api.laposte.fr/suivi/v1/${this.text_input}`,
         { headers: { 'X-Okapi-Key': process.env.X_OKAPI_KEY },
-        })
-      // eslint-disable-next-line
-      .then( (data) => { this.post(); })
-      // eslint-disable-next-line
-      .catch( (e) => { alert(e.body.message); });
+        }).then(() => { this.post(); })
+        // eslint-disable-next-line
+        .catch( (e) => { alert(e.body.message); });
     },
     post() {
       if (this.getDeliveryCompany() !== null) {
         this.$http.post(`${process.env.ADMIN_URL_DEV}/update/order`,
-          { order_id: this.id,
+          { order_id: this.order.id,
             tracking_number: this.text_input,
             delivery_service: this.getDeliveryCompany(),
           },
           { headers: { 'x-api-key': process.env.X_API_KEY } },
-        )
-        // eslint-disable-next-line
-        .then( (data) => { console.log(data); });
+        ).then((data) => { console.log(data); });
       }
-    },
-    sendModal() {
-      // alert("poisson d'avril");
     },
   },
   computed: {
     formatAmount() {
-      return parseFloat(this.amount / 100).toFixed(2);
+      return parseFloat(this.order.total_amount / 100).toFixed(2);
     },
     getDate() {
-      return `${this.date.slice(8, 10)}/${this.date.slice(5, 7)}/${this.date.slice(0, 4)}`;
+      return `${this.order.created_at.slice(8, 10)}/${this.order.created_at.slice(5, 7)}/${this.order.created_at.slice(0, 4)}`;
     },
     getTime() {
-      return this.date.slice(11, 16);
+      return this.order.created_at.slice(11, 16);
     },
   },
 };
 </script>
 
 <style scoped>
-.img-row {
-  padding-left: 15px;
-}
 .order {
   padding: 0 15px;
   border: 2px solid #2193b0;
@@ -133,7 +110,7 @@ a {
   font-weight: 700;
 }
 .btn-submit {
-  background: #f8d764;
+  background: mediumaquamarine;
   border: white;
   color: black;
   font-weight: 600;
@@ -156,5 +133,8 @@ a {
 }
 .ls-order-info {
   padding: 15px;
+}
+.input-group {
+  margin-top: 20px;
 }
 </style>

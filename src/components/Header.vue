@@ -1,6 +1,6 @@
 <template>
     <div class="container-flex app-header">
-        <h2>{{ title }}</h2>
+       <h2>{{ title }}</h2>
     </div>
 </template>
 

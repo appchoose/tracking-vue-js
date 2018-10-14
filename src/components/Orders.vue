@@ -1,15 +1,10 @@
 <template>
     <div class="container-flex orders-container">
         <h3>{{ title }} ({{ orders.length }})</h3>
-        <single-order v-for="(order, index) in orders"
+        <single-order
+        v-for="(order, index) in orders"
         v-bind:key="index"
-        v-bind:id="order.id"
-        v-bind:date="order.created_at"
-        v-bind:amount="order.total_amount"
-        v-bind:name="order.user.name"
-        v-bind:phone="order.user.phone_number"
-        v-bind:tracking_number="order.tracking_number"
-        v-bind:adresse="order.user.address"
+        v-bind:order="order"
         v-bind:images="images">
         </single-order>
     </div>
@@ -20,7 +15,11 @@ import SingleOrder from './SingleOrder';
 
 export default {
   components: { 'single-order': SingleOrder },
-  props: ['status', 'brand_id', 'sale_id'],
+  props: {
+    status: String,
+    brand_id: String,
+    sale_id: String,
+  },
   data() {
     return {
       title: null,
@@ -28,7 +27,7 @@ export default {
         { id: '4BZER4E24',
           created_at: '2018-10-10',
           total_amount: 100,
-          user: { name: 'Roger', phone_number: '0457483982', adresse: '23343' },
+          user: { name: 'Roger', phone_number: '0457483982', address: '23, avenue de la liberté 78000 Versailles' },
           tracking_number: null },
       ],
       images: [
