@@ -26,6 +26,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ``` bash
 npm install --save bootstrap
+npm install --save bootstrap-vue
 ```
 
 ### Font Awesome
