@@ -114,6 +114,7 @@ export default {
   padding-left: 15px;
 }
 .order {
+  padding: 0 15px;
   border: 2px solid #2193b0;
   border-radius: 10px;
   margin-bottom: 5px;
