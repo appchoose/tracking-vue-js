@@ -16,15 +16,21 @@
 </template>
 
 <script>
-import singleOrder from './singleOrder';
+import SingleOrder from './SingleOrder';
 
 export default {
-  components: { 'single-order': singleOrder },
+  components: { 'single-order': SingleOrder },
   props: ['status', 'brand_id', 'sale_id'],
   data() {
     return {
       title: null,
-      orders: [],
+      orders: [
+        { id: '4BZER4E24',
+          created_at: '2018-10-10',
+          total_amount: 100,
+          user: { name: 'Roger', phone_number: '0457483982', adresse: '23343' },
+          tracking_number: null },
+      ],
       images: [
         'https://images.asos-media.com/products/nike-cortez-baskets-en-daim-noir-902803-003/9059685-2?$XXL$&wid=513&fit=constrain',
         'https://images.asos-media.com/products/nike-cortez-baskets-en-daim-noir-902803-003/9059685-3?$XXL$&wid=513&fit=constrain',

@@ -8,7 +8,7 @@
             <b-col-1 v-for="(img, key) in images" :key="key">
               <b-img thumbnail v-bind:src="img" fluid height=75 @click="modalShow = !modalShow"/>
               <b-modal centered hide-header hide-footer v-model="modalShow">
-                <image-modal v-bind:src="img"></image-modal>
+                <image-modal v-bind:src="images"></image-modal>
               </b-modal>
             </b-col-1>
           </b-row>
@@ -47,7 +47,16 @@ import ImageModal from './ImageModal';
 import Images from './Images';
 
 export default {
-  props: ['id', 'date', 'amount', 'name', 'phone', 'tracking_number', 'adresse', 'images'],
+  props: {
+    id: String,
+    date: String,
+    amount: Number,
+    name: String,
+    phone: String,
+    tracking_number: String,
+    adresse: String,
+    images: Array,
+  },
   components: {
     'problem-modal': ProblemModal,
     'order-images': Images,
